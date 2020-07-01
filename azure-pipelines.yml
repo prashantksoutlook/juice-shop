@@ -21,7 +21,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build and push stage
+  displayName: Build and Upload to ACR
   jobs:  
   - job: Build
     displayName: Build
@@ -42,3 +42,20 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+- stage: Deploy
+  displayName: Deploy to Web App
+  jobs:
+    - job: Deploy
+      displayName: Deploy
+      steps:
+      
+      - task: AzureWebAppContainer@1
+        inputs:
+          azureSubscription: 'Essai gratuit(1)(2f1fa514-5bee-45b9-9a42-b59d28b2f8c5)'
+          appName: 'owaspjuiceshop'
+          deployToSlotOrASE: true
+          resourceGroupName: 'ITCMarketPlaceDemo'
+          slotName: 'production'
+          containers: 'juiceshop.azurecr.io/owaspjuiceshop:latest'
+          multicontainerConfigFile: '/'
+          containerCommand: 'npm start'
