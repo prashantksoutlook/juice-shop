@@ -37,13 +37,26 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
-- stage: Deploy
-  displayName: Deploy to Web App
+- stage: QA
+  displayName: Deploy to QA
+  jobs:
+    - job: Deploy
+      displayName: Deploy
+      steps:
+      
+      - task: AzureWebAppContainer@1
+        inputs:
+          azureSubscription: 'Essai gratuit(1)(2f1fa514-5bee-45b9-9a42-b59d28b2f8c5)'
+          appName: 'owaspjuiceshop'
+          deployToSlotOrASE: true
+          resourceGroupName: 'ITCMarketPlaceDemo'
+          slotName: 'QA'
+          containers: 'juiceshop.azurecr.io/owaspjuiceshop:$(tag)'
+          multicontainerConfigFile: '/'
+          containerCommand: 'npm start'
+
+- stage: PROD
+  displayName: Release to PROD
   jobs:
     - job: Deploy
       displayName: Deploy
