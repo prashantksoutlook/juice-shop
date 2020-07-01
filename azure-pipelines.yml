@@ -39,6 +39,7 @@ stages:
           $(tag)
 - stage: QA
   displayName: Deploy to QA
+  condition: succeeded('Build')
   jobs:
     - job: Deploy
       displayName: Deploy
@@ -57,6 +58,8 @@ stages:
 
 - stage: PROD
   displayName: Release to PROD
+  dependsOn: QA
+  condition: succeeded('QA')
   jobs:
     - job: Deploy
       displayName: Deploy
