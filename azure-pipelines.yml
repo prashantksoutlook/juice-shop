@@ -42,7 +42,7 @@ stages:
   condition: succeeded('Build')
   jobs:
     - job: Deploy
-      displayName: Deploy
+      displayName: Deploy to QA
       steps:
       
       - task: AzureWebAppContainer@1
@@ -62,7 +62,7 @@ stages:
   condition: succeeded('QA')
   jobs:
     - job: Deploy
-      displayName: Deploy
+      displayName: Deploy to PROD
       steps:
       
       - task: AzureWebAppContainer@1
