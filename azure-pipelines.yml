@@ -56,6 +56,6 @@ stages:
           deployToSlotOrASE: true
           resourceGroupName: 'ITCMarketPlaceDemo'
           slotName: 'production'
-          containers: 'juiceshop.azurecr.io/owaspjuiceshop:latest'
+          containers: 'juiceshop.azurecr.io/owaspjuiceshop'
           multicontainerConfigFile: '/'
           containerCommand: 'npm start'
