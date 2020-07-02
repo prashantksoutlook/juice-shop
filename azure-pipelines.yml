@@ -58,7 +58,7 @@ stages:
   - job: SCAScanner 
     displayName: Black Duck Scanning 
     pool:
-      'windows-latest'
+      Default
     steps:
         
     - task: SynopsysDetectTask@2
