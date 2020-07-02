@@ -17,7 +17,7 @@ variables:
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
-  vmImageName: 'windows-latest'
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: BUILD
@@ -58,7 +58,7 @@ stages:
   - job: SCAScanner 
     displayName: Black Duck Scanning 
     pool:
-      windows-2019
+      'ubuntu-16.04'	
     steps:
         
     - task: SynopsysDetectTask@2
