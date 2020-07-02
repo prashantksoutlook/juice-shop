@@ -44,6 +44,7 @@ stages:
     displayName: Prepare Scan 
     steps:
     - task: SonarQubePrepare@4
+      
       inputs:
         SonarQube: 'itcsonar'
         scannerMode: 'CLI'
@@ -52,6 +53,8 @@ stages:
         cliProjectName: 'Juiceshop'
         cliSources: '.'
   - job: SonarRun
+    dependsOn: 'SonarConfig'
+    condition: and(succeeded('SonarQube'))
     displayName: Run Scan
     steps:  
     - task: SonarQubeAnalyze@4
