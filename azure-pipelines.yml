@@ -54,7 +54,7 @@ stages:
         cliSources: '.'
   - job: SonarRun
     dependsOn: 'SonarConfig'
-    condition: and(succeeded('SonarQube'))
+    condition: succeeded('SonarQube')
     displayName: Run Scan
     steps:  
     - task: SonarQubeAnalyze@4
