@@ -56,6 +56,7 @@ stages:
 - stage: OSS
   displayName: Run OSS
   condition: succeeded('Build')
+  dependsOn: []
   jobs:
     - job: OSSScanner 
       displayName: BDScanner 
