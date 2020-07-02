@@ -55,7 +55,7 @@ stages:
     - task: SonarQubeAnalyze@4
 - stage: OSS
   displayName: Run OSS
-  condition: succeeded('QA')
+  condition: succeeded('Build')
   jobs:
     - job: OSSScanner 
       displayName: BDScanner 
