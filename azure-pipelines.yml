@@ -37,9 +37,11 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+          
 - stage: SAST
   displayName: Run SAST
   jobs:
+  
   - job: SonarConfig
     displayName: Prepare Scan 
     steps:
@@ -53,21 +55,18 @@ stages:
         cliSources: '.'
   
     - task: SonarQubeAnalyze@4
-- stage: OSS
-  displayName: Run OSS
-  condition: succeeded('Build')
-  jobs:
-    - job: OSSScanner 
-      displayName: BDScanner 
-      steps:
-         
-      - task: SynopsysDetectTask@2
-        inputs:
-          Products: 'BD'
-          BlackDuckService: 'bdscan'
-          BlackDuckProxyService: 'bdproxy'
-          DetectVersion: 'latest'
-              
+  
+  - job: OSSScanner 
+    displayName: BDScanner 
+    steps:
+        
+    - task: SynopsysDetectTask@2
+      inputs:
+        Products: 'BD'
+        BlackDuckService: 'bdscan'
+        BlackDuckProxyService: 'bdproxy'
+        DetectVersion: 'latest'
+            
 - stage: QA
   displayName: Deploy to QA
   condition: succeeded('OSS')
