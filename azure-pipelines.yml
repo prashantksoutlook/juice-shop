@@ -73,6 +73,21 @@ stages:
           multicontainerConfigFile: '/'
           containerCommand: 'npm start'
 
+- stage: OSS
+  displayName: Run OSS
+  condition: succeeded('QA')
+  jobs:
+    - job: OSSScanner 
+      displayName: BDScanner 
+      steps:
+         
+      - task: SynopsysDetectTask@2
+        inputs:
+          Products: 'BD'
+          BlackDuckService: 'bdscan'
+          BlackDuckProxyService: 'bdproxy'
+          DetectVersion: 'latest'
+
 - stage: PROD
   displayName: Release to PROD
   dependsOn: QA
