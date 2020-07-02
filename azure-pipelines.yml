@@ -37,6 +37,24 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+- stage: SAST
+  displayName: Run SAST
+  jobs:
+  - job: SonarConfig
+    displayName: Prepare Scan 
+    steps:
+    - task: SonarQubePrepare@4
+      inputs:
+        SonarQube: 'itcsonar'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'itcdemo-juiceshop'
+        cliProjectName: 'Juiceshop'
+        cliSources: '.'
+  - job: SonarRun
+    displayName: Run Scan
+    steps:  
+    - task: SonarQubeAnalyze@4
 - stage: QA
   displayName: Deploy to QA
   condition: succeeded('Build')
